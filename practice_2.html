@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      /* Flex container for the main content */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid black;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      header {
+        padding-bottom: 40px;
+        padding-top: 40px;
+        background-color: lightblue;
+        text-align: center;
+        align-content: center;
+        font-size: 24px;
+      }
+
+      nav {
+        background-color: lightpink;
+        text-align: center;
+        align-content: center;
+        font-size: 24px;
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+
+      .content {
+        flex: 1; /* stretch to fill remaining space */
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .left-col {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      section {
+        flex: 1; /* both fill evenly */
+        align-content: center;
+        text-align: center;
+        font-size: 24px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        background-color: yellow;
+      }
+      article {
+        flex: 1; /* both fill evenly */
+        align-content: center;
+        text-align: center;
+        font-size: 24px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        background-color: purple;
+      }
+
+      aside {
+        flex: 1;
+        align-content: center;
+        text-align: center;
+        font-size: 24px;
+        background-color: lightyellow;
+      }
+
+      footer {
+        background-color: lightgreen;
+        text-align: center;
+        align-content: center;
+        margin-top: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+      /* PHONE VIEW: aside goes to the LEFT */
+      @media screen and (max-width: 600px) {
+        .content {
+          flex-direction: column; /* stack everything */
+        }
+
+        aside {
+          order: 1; /* moves aside to the TOP / LEFT */
+          width: 100%;
+        }
+
+        .left-col {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="body">
+    <header class="header">header</header>
+
+    <nav class="nav">nav</nav>
+
+    <div class="content">
+      <div class="left-col">
+        <section class="box">section</section>
+        <article class="box">article</article>
+      </div>
+
+      <aside>aside</aside>
+    </div>
+    <footer class="footer">footer</footer>
+  </body>
+</html>
