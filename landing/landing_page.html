@@ -4,9 +4,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cellcard — Clone (Prototype)</title>
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/heroicons@2.1.1/dist/heroicons.js"></script>
+
     <style>
+        /* Mobile */
+    @media (max-width: 480px) {
+      /* Mobile styles */
+    }
+
+    /* Tablet */
+    @media (min-width: 481px) and (max-width: 1024px) {
+      /* Tablet styles */
+    }
+
+    /* Desktop */
+    @media (min-width: 1025px) {
+      /* Desktop styles */
+    }
       html {
         scroll-behavior: smooth;
       }
@@ -20,6 +36,73 @@
       .hero-bg {
         background: linear-gradient(180deg, #e9f2ff 0%, #fff 60%);
       }
+      /* ========== HERO SLIDER ========== */
+      .hero-slides {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .hero-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        pointer-events: none; /* blocks interactions when hidden */
+        transition: opacity 0.7s ease-in-out;
+      }
+
+      /* Show slide when selected */
+
+      #h1:checked ~ .hero-slides .hero-slide:nth-child(1) {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #h2:checked ~ .hero-slides .hero-slide:nth-child(2) {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #h3:checked ~ .hero-slides .hero-slide:nth-child(3) {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      /* Dots */
+      .hero-dot {
+        width: 14px;
+        height: 14px;
+        background: white;
+        opacity: 0.5;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      /* Active dot highlight */
+      #h1:checked ~ div label:nth-child(1),
+      #h2:checked ~ div label:nth-child(2),
+      #h3:checked ~ div label:nth-child(3) {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+
+      /* Optional auto-slide */
+      @keyframes heroAuto {
+        0% {
+          opacity: 1;
+        }
+        33% {
+          opacity: 1;
+        }
+        66% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
       .carousel-wrapper {
         width: 100%;
         max-width: 650px;
@@ -136,22 +219,20 @@
         <div class="flex items-center gap-3">
           <a
             href="#"
-            class="hidden md:inline-block px-4 py-2 rounded-md bg-red-600 text-white text-sm"
-            >Top Up</a
+            class="hidden md:inline-block px-4 py-2 rounded-md bg-orange-400 text-white text-sm"
+            >Find Us</a
           >
           <button id="hamburger" class="md:hidden p-2 rounded-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="size-5"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
+                fill-rule="evenodd"
+                d="M2 3.75A.75.75 0 0 1 2.75 3h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75Zm0 4.167a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Zm0 4.166a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Zm0 4.167a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"
+                clip-rule="evenodd"
               />
             </svg>
           </button>
@@ -167,43 +248,118 @@
           <a
             href="#"
             class="py-2 mt-2 bg-red-600 text-white text-center rounded-md"
-            >Top Up</a
+            >Find Us</a
           >
         </div>
       </div>
     </header>
 
-    <main">
-      <!-- HERO FULL BACKGROUND IMAGE WITH TEXT + CTAs -->
-      <section
-        class="w-full h-[80vh] bg-cover bg-center bg-no-repeat flex items-start justify-start"
-        style="background-image: url('/assets/images/pexels_image.jpg')"
-      >
-        <div
-          class="max-w-6xl px-4 flex flex-col justify-center h-full text-left"
-        >
-          <h1
-            class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg max-w-2xl"
+    <main>
+      <!-- HERO SLIDER (Pure CSS) -->
+      <section class="relative w-full h-[80vh] overflow-hidden">
+        <!-- Radio controls (hidden) -->
+        <input type="radio" name="hero" id="h1" checked class="hidden" />
+        <input type="radio" name="hero" id="h2" class="hidden" />
+        <input type="radio" name="hero" id="h3" class="hidden" />
+
+        <!-- Slides -->
+        <div class="absolute inset-0 hero-slides">
+          <!-- SLIDE 1 -->
+          <div
+            class="hero-slide"
+            style="background-image: url('/assets/images/hero.avif')"
           >
-            Stay connected with the best coverage in Cambodia
-          </h1>
-          <p class="mt-4 text-white text-lg max-w-xl drop-shadow-md">
-            Prepaid, postpaid, traveller SIMs, and high-speed Home WiFi.
-          </p>
-          <div class="mt-6 flex gap-4">
-            <a
-              href="#pricing"
-              class="px-6 py-3 rounded-md bg-white text-gray-900 font-semibold shadow hover:bg-gray-100"
-              >See Plans</a
+            <div
+              class="max-w-6xl px-4 flex flex-col justify-center h-full text-left"
             >
-            <a
-              href="#why"
-              class="px-6 py-3 rounded-md bg-orange-500 text-white font-semibold shadow hover:bg-orange-600"
-              >Why us</a
+              <h1
+                class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg max-w-2xl"
+              >
+                Fast 5G Mobile Internet Anywhere
+              </h1>
+              <p class="mt-4 text-white text-lg max-w-xl drop-shadow-md">
+                Enjoy ultra-fast 5G speeds nationwide.
+              </p>
+              <div class="mt-6 flex gap-4">
+                <a
+                  href="#pricing"
+                  class="px-6 py-3 rounded-md bg-white text-gray-900 font-semibold shadow hover:bg-gray-200"
+                  >Explore 5G Plans</a
+                >
+                <a
+                  href="#why"
+                  class="px-6 py-3 rounded-md bg-orange-400 text-white font-semibold shadow hover:bg-orange-500"
+                  >Why us</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2 -->
+          <div
+            class="hero-slide"
+            style="background-image: url('/assets/images/unsplah_image.jpg')"
+          >
+            <div
+              class="max-w-6xl px-4 flex flex-col justify-center h-full text-left"
             >
+              <h1
+                class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg max-w-2xl"
+              >
+                High-speed Home WiFi for Everyone
+              </h1>
+              <p class="mt-4 text-white text-lg max-w-xl drop-shadow-md">
+                Unlimited internet for streaming, work, and gaming.
+              </p>
+              <div class="mt-6 flex gap-4">
+                <a
+                  href="#pricing"
+                  class="px-6 py-3 rounded-md bg-white text-gray-900 font-semibold shadow hover:bg-gray-100"
+                  >See WiFi Plans</a
+                >
+              </div>
+            </div>
+          </div>
+          <!-- SLIDE 3 -->
+          <div
+            class="hero-slide"
+            style="background-image: url('/assets/images/pexels_image.jpg')"
+          >
+            <div
+              class="max-w-6xl px-4 flex flex-col justify-center h-full text-left"
+            >
+              <h1
+                class="text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg max-w-2xl"
+              >
+                Stay connected with the best coverage in Cambodia
+              </h1>
+              <p class="mt-4 text-white text-lg max-w-xl drop-shadow-md">
+                Prepaid, postpaid, traveller SIMs, and high-speed Home WiFi.
+              </p>
+              <div class="mt-6 flex gap-4">
+                <a
+                  href="#pricing"
+                  class="px-6 py-3 rounded-md bg-white text-gray-900 font-semibold shadow hover:bg-gray-100"
+                  >See Plans</a
+                >
+                <!-- <a
+                  href="#why"
+                  class="px-6 py-3 rounded-md bg-orange-500 text-white font-semibold shadow hover:bg-orange-600"
+                  >Why us</a
+                > -->
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- Navigation Dots -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+          <label for="h1" class="hero-dot"></label>
+          <label for="h2" class="hero-dot"></label>
+          <label for="h3" class="hero-dot"></label>
+        </div>
       </section>
+
       <!-- WHY CELLCARD -->
       <section id="why" class="py-16 bg-white">
         <div class="max-w-6xl mx-auto px-4">
@@ -224,7 +380,20 @@
             <div
               class="p-6 rounded-xl border bg-white shadow-sm hover:shadow-md transition"
             >
-              <div class="text-red-600 text-3xl mb-3">📶</div>
+              <div class="text-orange-400 text-3xl mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="size-5"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M.676 6.941A12.964 12.964 0 0 1 10 3c3.657 0 6.963 1.511 9.324 3.941a.75.75 0 0 1-.008 1.053l-.353.354a.75.75 0 0 1-1.069-.008C15.894 6.28 13.097 5 10 5 6.903 5 4.106 6.28 2.106 8.34a.75.75 0 0 1-1.069.008l-.353-.354a.75.75 0 0 1-.008-1.053Zm2.825 2.833A8.976 8.976 0 0 1 10 7a8.976 8.976 0 0 1 6.499 2.774.75.75 0 0 1-.011 1.049l-.354.354a.75.75 0 0 1-1.072-.012A6.978 6.978 0 0 0 10 9c-1.99 0-3.786.83-5.061 2.165a.75.75 0 0 1-1.073.012l-.354-.354a.75.75 0 0 1-.01-1.05Zm2.82 2.84A4.989 4.989 0 0 1 10 11c1.456 0 2.767.623 3.68 1.614a.75.75 0 0 1-.022 1.039l-.354.354a.75.75 0 0 1-1.085-.026A2.99 2.99 0 0 0 10 13c-.88 0-1.67.377-2.22.981a.75.75 0 0 1-1.084.026l-.354-.354a.75.75 0 0 1-.021-1.039Zm2.795 2.752a1.248 1.248 0 0 1 1.768 0 .75.75 0 0 1 0 1.06l-.354.354a.75.75 0 0 1-1.06 0l-.354-.353a.75.75 0 0 1 0-1.06Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
               <h3 class="font-semibold text-lg">Extensive Coverage</h3>
               <p class="mt-2 text-gray-600 text-sm">
                 Stay connected nationwide with strong 4G and 5G coverage.
@@ -235,7 +404,18 @@
             <div
               class="p-6 rounded-xl border bg-white shadow-sm hover:shadow-md transition"
             >
-              <div class="text-red-600 text-3xl mb-3">💨</div>
+              <div class="text-orange-400 text-3xl mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="size-5"
+                >
+                  <path
+                    d="M3.288 4.818A1.5 1.5 0 0 0 1 6.095v7.81a1.5 1.5 0 0 0 2.288 1.276l6.323-3.905c.155-.096.285-.213.389-.344v2.973a1.5 1.5 0 0 0 2.288 1.276l6.323-3.905a1.5 1.5 0 0 0 0-2.552l-6.323-3.906A1.5 1.5 0 0 0 10 6.095v2.972a1.506 1.506 0 0 0-.389-.343L3.288 4.818Z"
+                  />
+                </svg>
+              </div>
               <h3 class="font-semibold text-lg">High-Speed Internet</h3>
               <p class="mt-2 text-gray-600 text-sm">
                 Fast mobile and Home WiFi plans for streaming, gaming, and work.
@@ -246,7 +426,20 @@
             <div
               class="p-6 rounded-xl border bg-white shadow-sm hover:shadow-md transition"
             >
-              <div class="text-red-600 text-3xl mb-3">💳</div>
+              <div class="text-orange-400 text-3xl mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="size-5"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2.5 4A1.5 1.5 0 0 0 1 5.5V6h18v-.5A1.5 1.5 0 0 0 17.5 4h-15ZM19 8.5H1v6A1.5 1.5 0 0 0 2.5 16h15a1.5 1.5 0 0 0 1.5-1.5v-6ZM3 13.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Zm4.75-.75a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-3.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
               <h3 class="font-semibold text-lg">Flexible Plans</h3>
               <p class="mt-2 text-gray-600 text-sm">
                 Prepaid, postpaid, and traveller SIMs to suit every need.
@@ -257,7 +450,18 @@
             <div
               class="p-6 rounded-xl border bg-white shadow-sm hover:shadow-md transition"
             >
-              <div class="text-red-600 text-3xl mb-3">🏪</div>
+              <div class="text-orange-400 text-3xl mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="size-5"
+                >
+                  <path
+                    d="M2.879 7.121A3 3 0 0 0 7.5 6.66a2.997 2.997 0 0 0 2.5 1.34 2.997 2.997 0 0 0 2.5-1.34 3 3 0 1 0 4.622-3.78l-.293-.293A2 2 0 0 0 15.415 2H4.585a2 2 0 0 0-1.414.586l-.292.292a3 3 0 0 0 0 4.243ZM3 9.032a4.507 4.507 0 0 0 4.5-.29A4.48 4.48 0 0 0 10 9.5a4.48 4.48 0 0 0 2.5-.758 4.507 4.507 0 0 0 4.5.29V16.5h.25a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 0-.75-.75h-2.5a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1 0-1.5H3V9.032Z"
+                  />
+                </svg>
+              </div>
               <h3 class="font-semibold text-lg">Convenient Stores</h3>
               <p class="mt-2 text-gray-600 text-sm">
                 Activate services quickly at stores across Cambodia.
@@ -268,7 +472,23 @@
             <div
               class="p-6 rounded-xl border bg-white shadow-sm hover:shadow-md transition"
             >
-              <div class="text-red-600 text-3xl mb-3">📞</div>
+              <div class="text-orange-400 text-3xl mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="size-5"
+                >
+                  <path
+                    d="M8 16.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 4a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V4Zm4-1.5v.75c0 .414.336.75.75.75h2.5a.75.75 0 0 0 .75-.75V2.5h1A1.5 1.5 0 0 1 14.5 4v12a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 16V4A1.5 1.5 0 0 1 7 2.5h1Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
               <h3 class="font-semibold text-lg">Reliable Support</h3>
               <p class="mt-2 text-gray-600 text-sm">
                 Customer care hotline and email support ready for you 24/7.
@@ -279,7 +499,20 @@
             <div
               class="p-6 rounded-xl border bg-white shadow-sm hover:shadow-md transition"
             >
-              <div class="text-red-600 text-3xl mb-3">🔒</div>
+              <div class="text-orange-400 text-3xl mb-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="size-5"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
               <h3 class="font-semibold text-lg">Secure & Trusted</h3>
               <p class="mt-2 text-gray-600 text-sm">
                 Your personal information and connectivity are safe with
@@ -291,7 +524,7 @@
       </section>
 
       <!-- PRICING SECTION -->
-      <section id="pricing" class="py-16 bg-gray-50">
+      <section id="pricing" class="py-16 bg-gray-50 ">
         <div class="max-w-6xl mx-auto px-4">
           <!-- Section Title -->
           <h2 class="text-3xl font-bold text-gray-900 text-center">
@@ -303,7 +536,7 @@
           </p>
 
           <!-- Pricing Grid -->
-          <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="mt-12 grid grid-cols-1 md:grid-cols-1 gap-6">
             <!-- Free Plan -->
             <div
               class="flex flex-col p-6 bg-white rounded-xl shadow hover:shadow-md transition border"
@@ -320,19 +553,29 @@
                 <li>✔ Community support</li>
                 <li>✔ Single device</li>
               </ul>
-              <a
-                href="#"
-                class="mt-auto px-6 py-3 text-center bg-gray-200 rounded-md text-gray-900 font-semibold hover:bg-gray-300"
-                >Get Started</a
-              >
+              <div class="flex gap-4">
+                <a
+                  href="#"
+                  class="flex-1 px-3 py-3 text-center bg-white rounded-md text-gray-900 font-semibold border-2 border-orange-400 hover:bg-orange-400 hover:text-white transition"
+                >
+                  <i class="fa-solid fa-user text-blue-500 text-xl"></i>
+                  <span>Get Started</span>
+                </a>
+                <a
+                  href="#"
+                  class="flex-1 px-6 py-3 text-center bg-orange-400 rounded-md text-white font-semibold hover:bg-orange-600"
+                >
+                  Cellcard App
+                </a>
+              </div>
             </div>
 
             <!-- Premium Individual -->
             <div
-              class="flex flex-col p-6 bg-white rounded-xl shadow-lg border-2 border-red-500 hover:shadow-xl transition relative"
+              class="flex flex-col p-6 bg-white rounded-xl shadow-lg border-2 border-orange-400 hover:shadow-xl transition relative"
             >
               <span
-                class="absolute top-0 right-0 mt-3 mr-3 bg-red-500 text-white text-xs px-2 py-1 rounded"
+                class="absolute top-0 right-0 mt-3 mr-3 bg-orange-400 text-white text-xs px-2 py-1 rounded"
                 >Popular</span
               >
               <h3 class="text-xl font-semibold mb-2 text-gray-900">
@@ -351,7 +594,7 @@
               </ul>
               <a
                 href="#"
-                class="mt-auto px-6 py-3 text-center bg-red-500 rounded-md text-white font-semibold hover:bg-red-600"
+                class="mt-auto px-6 py-3 text-center bg-orange-400 rounded-md text-white font-semibold hover:bg-orange-600"
                 >Get Started</a
               >
             </div>
@@ -372,11 +615,22 @@
                 <li>✔ Priority support</li>
                 <li>✔ Up to 5 devices</li>
               </ul>
-              <a
-                href="#"
-                class="mt-auto px-6 py-3 text-center bg-gray-200 rounded-md text-gray-900 font-semibold hover:bg-gray-300"
-                >Get Started</a
-              >
+              <div class="flex gap-4">
+                <a
+                  href="#"
+                  class="flex-1 px-3 py-3 text-center bg-white rounded-md text-gray-900 font-semibold border-2 border-orange-400 hover:bg-orange-400 hover:text-white transition"
+                >
+                  <i class="fas fa-rocket"></i>
+                  <!-- Font Awesome icon -->
+                  <span>Get Started</span>
+                </a>
+                <a
+                  href="#"
+                  class="flex-1 px-6 py-3 text-center bg-orange-400 rounded-md text-white font-semibold hover:bg-orange-600"
+                >
+                  Cellcard App
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -537,7 +791,5 @@
       window.addEventListener("scroll", onScroll, { passive: true });
       onScroll();
     </script>
-
-    <!-- NOTES: This is a prototype clone for learning and development. Replace all logos, images, and text with licensed assets or original content before publishing. -->
   </body>
 </html>
